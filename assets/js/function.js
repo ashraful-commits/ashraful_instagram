@@ -23,3 +23,25 @@ const getItem = (key) => {
     return false;
   }
 };
+
+// timeCounter function
+
+const timeCounter = (postTime) => {
+  let currentTime = Date.now();
+  let timeDiff = currentTime - postTime;
+
+  let totalSecond = Math.floor(timeDiff / 1000);
+  let totalMin = Math.floor(totalSecond / 60);
+  let totalHour = Math.floor(totalMin / 60);
+  let totalDay = Math.floor(totalHour / 24);
+
+  if (totalSecond <= 60) {
+    return `${totalSecond} sec ago`;
+  } else if (totalSecond > 60) {
+    return `${totalMin} min ago`;
+  } else if (totalMin > 60) {
+    return `${totalHour} hour ago`;
+  } else if (totalHour > 24) {
+    return `${totalDay} day ago`;
+  }
+};

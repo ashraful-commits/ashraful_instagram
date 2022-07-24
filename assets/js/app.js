@@ -19,7 +19,9 @@ const allData = (e) => {
             <div class="d-flex justify-content-between align-items-center ">
             <div  class="d-flex align-items-center justify-content-start ps-3 ">
             <span class="user_top_img">                
-            <img  style="width: 42px;height:42px" src="${item.user_photo}" alt="user" class="border-1 border-dark rounded rounded-circle me-2">
+            <img  style="width: 42px;height:42px" src="${
+              item.user_photo
+            }" alt="user" class="border-1 border-dark rounded rounded-circle me-2">
             </span>
                 <div class=" my-3 d-flex flex-column justify-content-start text-start">
                  <p class="mb-0 user_name_top">${item.user_name}</p>
@@ -53,11 +55,11 @@ const allData = (e) => {
             <p>13,609 likes</p>
             <p>13,609 <span>..more</span></p>
             <p>view all 79 comments</p>
-            <p>10 MINUTES AGO</p>
+            <p>${timeCounter(item.post_time)}</p>
              <div class="d-flex justify-content-between">
              <i class="fa-regular fa-face-smile position-absolute my-2 mx-2"></i>
              <input class="w-75 rounded rounded-5 border px-5" placeholder="Add a comment...">
-             <button class="btn btn-white text-primary">post</button>
+             <button class="btn btn-white text-primary">Post</button>
              </div>
             </div>
             </li>
@@ -73,9 +75,18 @@ allData();
 
 facbook_form.addEventListener("submit", (e) => {
   e.preventDefault();
+  let postTime = {
+    post_time: Date.now(),
+  };
 
   let form_value = new FormData(e.target);
   let form_data = Object.fromEntries(form_value.entries());
+
+  let finalData = {
+    ...postTime,
+    ...form_data,
+  };
+
   let { photo, user_name, user_photo } = form_data;
   if (!photo || !user_name || !user_photo) {
     msg.innerHTML = setAlert("All fields are required");
@@ -86,7 +97,7 @@ facbook_form.addEventListener("submit", (e) => {
     setTimeout(() => {
       loadding.style.display = "none";
       e.target.style.opacity = "1";
-      setDataLs("facebook", form_data);
+      setDataLs("facebook", finalData);
       allData();
       e.target.reset();
     }, 1000);
@@ -135,6 +146,7 @@ output.onclick = (e) => {
             photo,
             user_name,
             user_photo,
+            post_time: Date.now(),
           };
           updataLsData("facebook", lsdata_edit);
           e.target.reset();
