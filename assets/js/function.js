@@ -43,5 +43,7 @@ const timeCounter = (postTime) => {
     return `${totalHour} hour ago`;
   } else if (totalHour > 24) {
     return `${totalDay} day ago`;
+  } else {
+    return `old post`;
   }
 };
