@@ -35,32 +35,16 @@ const timeCounter = (postTime) => {
   let totalHour = Math.floor(totalMin / 60);
   let totalDay = Math.floor(totalHour / 24);
 
-  switch (totalSecond) {
-    case totalSecond <= 60:
-      return `${totalSecond} sec ago`;
-      break;
-    case totalSecond < 3600:
-      return `${totalMin} min ago`;
-      break;
-    case totalSecond < 72000:
-      return `${totalHour} hour ago`;
-      break;
-    case totalSecond < 8640000:
-      return `${totalDay} day ago`;
-    default:
-      return false;
+  if (totalSecond <= 60) {
+    return `${totalSecond} sec ago`;
   }
-
-  // if (totalSecond <= 60) {
-  //   return `${totalSecond} sec ago`;
-  // }
-  // if (totalSecond >= 60) {
-  //   return `${totalMin} min ago`;
-  // }
-  // if (totalSecond >= 3600) {
-  //   return `${totalHour} hour ago`;
-  // }
-  // if (totalSecond >= 8640000) {
-  //   return `${totalDay} day ago`;
-  // }
+  if (totalSecond >= 60) {
+    return `${totalMin} min ago`;
+  }
+  if (totalSecond >= 3600) {
+    return `${totalHour} hour ago`;
+  }
+  if (totalSecond >= 8640000) {
+    return `${totalDay} day ago`;
+  }
 };
