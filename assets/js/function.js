@@ -38,10 +38,10 @@ const timeCounter = (postTime) => {
   if (totalSecond <= 60) {
     return `${totalSecond} sec ago`;
   }
-  if (totalSecond <= 3600) {
+  if (totalSecond >= 60 || totalSecond <= 3600) {
     return `${totalMin} min ago`;
   }
-  if (totalSecond <= 86400) {
+  if (totalSecond >= 3600 || totalSecond <= 86400) {
     return `${totalHour} hour ago`;
   }
   if (totalSecond >= 86400) {
