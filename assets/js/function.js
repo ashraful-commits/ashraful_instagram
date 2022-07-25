@@ -36,15 +36,15 @@ const timeCounter = (postTime) => {
   let totalDay = Math.floor(totalHour / 24);
 
   if (totalSecond <= 60) {
-    return `${totalSecond} s ago`;
+    return `${totalSecond} sec ago`;
   }
   if (totalSecond >= 60) {
-    return `${totalMin} m ago`;
+    return `${totalMin} min ago`;
   }
   if (totalSecond >= 3600) {
-    return `${totalHour} h ago`;
+    return `${totalHour} hour ago`;
   }
   if (totalSecond >= 8640000) {
-    return `${totalDay} d ago`;
+    return `${totalDay} day ago`;
   }
 };
