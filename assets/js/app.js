@@ -32,7 +32,7 @@ const allData = (e) => {
                 <button class="btn btn-secondary dropdown-toggle btn-group dropstart" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-ellipsis"></i>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">    
+                <ul class="dropdown-menu border-0" aria-labelledby="dropdownMenuButton1">    
                                 <li><a class="dropdown-item edit"  serial="${
                                   item.post_time
                                 }" href="#"  data-bs-target="#edit_form" data-bs-toggle="modal">Edit</a></li>
