@@ -37,9 +37,9 @@ const timeCounter = (postTime) => {
 
   if (totalSecond < 60) {
     return `${totalSecond} sec ago`;
-  } else if (totalSecond > 60 || totalSecond < 3600) {
+  } else if (totalSecond > 60 && totalSecond < 3600) {
     return `${totalMin} min ago`;
-  } else if (totalSecond > 3600 || totalSecond < 86400) {
+  } else if (totalSecond > 3600 && totalSecond < 86400) {
     return `${totalHour} hour ago`;
   } else if (totalSecond > 86400) {
     return `${totalDay} day ago`;
