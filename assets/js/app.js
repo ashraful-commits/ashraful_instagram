@@ -32,8 +32,13 @@ const allData = (e) => {
                 <button class="btn btn-secondary dropdown-toggle btn-group dropstart" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-ellipsis"></i>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">                    <li><a class="dropdown-item edit"  serial="${index}" href="#"  data-bs-target="#edit_form" data-bs-toggle="modal">Edit</a></li>
-                    <li><a class="dropdown-item delete"  serial="${index}" href="#">Delete</a></li>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">    
+                                <li><a class="dropdown-item edit"  serial="${
+                                  item.post_time
+                                }" href="#"  data-bs-target="#edit_form" data-bs-toggle="modal">Edit</a></li>
+                    <li><a class="dropdown-item delete"  serial="${
+                      item.post_time
+                    }" href="#">Delete</a></li>
                 </ul>
                 </div>
             </div>
@@ -83,8 +88,8 @@ facbook_form.addEventListener("submit", (e) => {
   let form_data = Object.fromEntries(form_value.entries());
 
   let finalData = {
-    ...postTime,
     ...form_data,
+    ...postTime,
   };
 
   let { photo, user_name, user_photo } = form_data;
@@ -107,24 +112,37 @@ facbook_form.addEventListener("submit", (e) => {
 output.onclick = (e) => {
   e.preventDefault();
 
+  // data delete
   if (e.target.classList.contains("delete")) {
-    let index = e.target.getAttribute("serial");
-    let lsdata_delete = getItem("facebook");
-    lsdata_delete.splice(index, 1);
-    updataLsData("facebook", lsdata_delete);
-    allData();
+    let con = confirm(`do you want to delete ?`);
+    if (con == true) {
+      let indexnum = e.target.getAttribute("serial");
+      let lsdata_delete = getItem("facebook");
+      console.log(indexnum);
+      const afterDeleteData = lsdata_delete.filter(
+        (data) => data.post_time != indexnum
+      );
+      console.log(afterDeleteData);
+      updataLsData("facebook", afterDeleteData);
+      allData();
+    }
   }
+
+  //  data edit
   if (e.target.classList.contains("edit")) {
     let index = e.target.getAttribute("serial");
     let lsdata_edit = getItem("facebook");
-    const poto_edit = document.getElementById("photo");
-    const user_name_edit = document.getElementById("user_name");
-    const user_photo_edit = document.getElementById("user_photo");
-    let { photo, user_name, user_photo } = lsdata_edit[index];
+    let poto_edit = document.getElementById("photo");
+    let user_name_edit = document.getElementById("user_name");
+    let user_photo_edit = document.getElementById("user_photo");
+    lsdata_edit.find((editItem) => {
+      if (editItem.post_time == index) {
+        poto_edit.value = editItem.photo;
+        user_name_edit.value = editItem.user_name;
+        user_photo_edit.value = editItem.user_photo;
+      }
+    });
 
-    poto_edit.value = photo;
-    user_name_edit.value = user_name;
-    user_photo_edit.value = user_photo;
     // console.log(index);
     facbook_edit.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -132,7 +150,9 @@ output.onclick = (e) => {
       let form_value = new FormData(e.target);
       let form_data = Object.fromEntries(form_value.entries());
       let { photo, user_name, user_photo } = form_data;
-
+      let postTime = {
+        post_time: Date.now(),
+      };
       if (!photo || !user_name || !user_photo) {
         msg.innerHTML = setAlert("All fields are required");
       } else {
@@ -142,13 +162,19 @@ output.onclick = (e) => {
         setTimeout(() => {
           e.target.style.opacity = "1";
           loadding_save.style.display = "none";
-          lsdata_edit[index] = {
-            photo,
-            user_name,
-            user_photo,
-            post_time: Date.now(),
+          let afterEdit = {
+            ...form_data,
+            ...postTime,
           };
-          updataLsData("facebook", lsdata_edit);
+
+          lsdata_edit.push(afterEdit);
+
+          const finalEditData = lsdata_edit.filter((data) => {
+            if (data.post_time != index) {
+              return data;
+            }
+          });
+          updataLsData("facebook", finalEditData);
           e.target.reset();
           allData();
         }, 1000);
