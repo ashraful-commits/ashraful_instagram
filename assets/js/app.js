@@ -14,7 +14,7 @@ const allData = (e) => {
   }
 
   if (lsData) {
-    lsData.map((item, index) => {
+    lsData.reverse().map((item, index) => {
       list += `<li class="my-2  list-group-item px-0">
             <div class="d-flex justify-content-between align-items-center ">
             <div  class="d-flex align-items-center justify-content-start ps-3 ">
